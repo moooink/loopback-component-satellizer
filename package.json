@@ -1,0 +1,39 @@
+{
+  "name": "loopback-satellizer",
+  "version": "0.0.1",
+  "description": "A loopback module for satellizer",
+  "main": "index.js",
+  "contributors": [
+    {
+      "name": "Jérémie Drouet",
+      "email": "jeremie.drouet@gmail.com"
+    },
+    {
+      "name": "Jonathan Beurel",
+      "email": ""
+    }
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moooink/loopback-satellizer.git"
+  },
+  "keywords": [
+    "loopback",
+    "satellizer",
+    "facebook",
+    "twitter",
+    "google"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moooink/loopback-satellizer/issues"
+  },
+  "homepage": "https://github.com/moooink/loopback-satellizer#readme",
+  "dependencies": {
+    "coffee-script": "^1.9.3"
+  }
+}
