@@ -2,7 +2,7 @@
   "name": "loopback-satellizer",
   "version": "0.0.1",
   "description": "A loopback module for satellizer",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "contributors": [
     {
       "name": "Jérémie Drouet",
