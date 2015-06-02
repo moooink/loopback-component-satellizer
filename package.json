@@ -45,6 +45,7 @@
     "gulp-util": "^3.0.4",
     "loopback": "^2.18.0",
     "loopback-datasource-juggler": "^2.29.2",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "nock": "^2.3.0"
   }
 }

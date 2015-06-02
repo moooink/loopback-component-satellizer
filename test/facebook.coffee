@@ -1,12 +1,12 @@
 expect    = require('chai').expect
 loopback  = require 'loopback'
+nock      = require 'nock'
 
 init      = require './init.coffee'
 
 
 before (done) ->
   loopback.Application.destroyAll done
-
 
 describe 'Facebook module', ->
 
@@ -35,3 +35,25 @@ describe 'Facebook module', ->
     init.Facebook options
     expect(Account).to.exist
     expect(Account.facebook).to.exist
+
+  describe 'call to loopback method', ->
+
+    profile =
+      id: 'profile_id'
+      email: 'user@example.com'
+      first_name: 'firstName'
+      last_name: 'lastName'
+      birthday: new Date()
+      gender: 'male'
+
+    it 'should call facebook twice and return profile', (done) ->
+      first = nock 'https://graph.facebook.com'
+      .get '/v2.3/oauth/access_token'
+      .reply 200, 'my_wonderfull_token'
+      second = nock 'https://graph.facebook.com'
+      .get '/v2.3/me'
+      .reply 200, profile
+      #
+      # TODO call facebook method
+      #
+      done()

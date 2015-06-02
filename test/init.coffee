@@ -12,4 +12,4 @@ loopback.setDefaultDataSourceForType 'mail',
   ]
 
 # auto attach data sources to models
-loopback.autoAttach();
+loopback.autoAttach()
