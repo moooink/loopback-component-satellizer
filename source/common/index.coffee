@@ -1,6 +1,6 @@
 debug = console.log
 
-module.exports = (config) ->
+module.exports = (options) ->
 
   Model = options.model
 

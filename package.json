@@ -14,7 +14,8 @@
     }
   ],
   "scripts": {
-    "test": "mocha 'test/**/*.coffee'",
+    "pretest": "npm run build",
+    "test": "mocha 'test/*.coffee'",
     "build": "gulp build"
   },
   "repository": {
@@ -42,6 +43,8 @@
     "gulp": "^3.8.11",
     "gulp-coffee": "^2.3.1",
     "gulp-util": "^3.0.4",
+    "loopback": "^2.18.0",
+    "loopback-datasource-juggler": "^2.29.2",
     "mocha": "^2.2.5"
   }
 }
