@@ -13,6 +13,7 @@ describe 'Facebook module', ->
 
   beforeEach ->
     app     = require '../example/server/server.js'
+    app.datasources.db.automigrate()
     agent   = request app
     Account = app.models.Account
 
@@ -33,8 +34,8 @@ describe 'Facebook module', ->
     profile =
       id: 'profile_id'
       email: 'user@example.com'
-      first_name: 'firstName'
-      last_name: 'lastName'
+      first_name: 'my_first_name'
+      last_name: 'my_last_name'
       birthday: new Date()
       gender: 'male'
 
@@ -75,11 +76,20 @@ describe 'Facebook module', ->
       expect(answer.res.body).to.have.property 'ttl'
 
     it 'should create the account', (done) ->
+      app.models.Account.count email: 'user@example.com', (err, nb) ->
+        expect(err).to.not.exist
+        expect(nb).to.eql 1
+        done err
+
+    it 'should map the profile in the account', (done) ->
       app.models.Account.findOne
         where:
           email: 'user@example.com'
       , (err, found) ->
         expect(err).to.not.exist
         expect(found).to.exist
-        expect(found.facebook).to.eql 'profile_id'
+        expect(found.facebook).to.eql profile.id
+        expect(found.firstName).to.eql profile.first_name
+        expect(found.lastName).to.eql profile.last_name
+        expect(found.gender).to.eql profile.gender
         done err

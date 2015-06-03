@@ -8,7 +8,14 @@ module.exports = function enableAuthentication(server) {
     model: server.models.Account,
     facebook: {
       credentials: server.settings.provider.facebook,
-      uri: '/facebook'
+      uri: '/facebook',
+      mapping: {
+        id: 'facebook',
+        email: 'email',
+        first_name: 'firstName',
+        last_name: 'lastName',
+        gender: 'gender'
+      }
     }
   });
 };

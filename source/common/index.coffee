@@ -24,7 +24,13 @@ module.exports = (options) ->
       return callback null, false if not accessToken
       Model.findById accessToken.userId, callback
 
+  map = (config, source, destination) ->
+    for key, value of config
+      if key of source
+        destination[value] = destination[value] or source[key]
+
   return {
     authenticate: authenticate
     current:      current
+    map:          map
   }

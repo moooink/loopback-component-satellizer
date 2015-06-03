@@ -76,15 +76,10 @@ module.exports = (options) ->
 
   link.create = (profile, callback) ->
     debug 'link.create', profile.id
-    Model.create
-      email: profile.email
+    tmp =
       password: randomstring.generate()
-      facebook: profile.id
-      firstName: profile.first_name
-      lastName: profile.last_name
-      birthday: profile.birthday
-      gender: profile.gender
-    , (err, created) ->
+    Common.map options.facebook.mapping, profile, tmp
+    Model.create tmp, (err, created) ->
       debug err if err
       return callback err, created
 
@@ -95,11 +90,7 @@ module.exports = (options) ->
       err.status = 409
       debug err
       return callback err
-    account.facebook  = account.facebook  or profile.id
-    account.firstName = account.firstName or profile.first_name
-    account.lastName  = account.lastName  or profile.last_name
-    account.birthday  = account.birthday  or profile.birthday
-    account.gender    = account.gender    or profile.gender
+    Common.map options.facebook.mapping, profile, account
     account.save (err) ->
       debug err if err
       return callback err, account
