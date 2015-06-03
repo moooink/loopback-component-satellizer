@@ -36,16 +36,26 @@
   },
   "homepage": "https://github.com/moooink/loopback-satellizer#readme",
   "dependencies": {
-    "coffee-script": "^1.9.3"
+    "async": "^1.2.0",
+    "coffee-script": "^1.9.3",
+    "randomstring": "^1.0.6",
+    "request": "^2.57.0"
   },
   "devDependencies": {
     "chai": "^2.3.0",
+    "compression": "^1.0.3",
+    "cors": "^2.5.2",
+    "errorhandler": "^1.1.1",
     "gulp": "^3.8.11",
     "gulp-coffee": "^2.3.1",
     "gulp-util": "^3.0.4",
     "loopback": "^2.18.0",
+    "loopback-boot": "^2.8.0",
     "loopback-datasource-juggler": "^2.29.2",
+    "strong-express-metrics": "^1.1.0",
     "mocha": "^2.2.5",
-    "nock": "^2.3.0"
+    "nock": "^2.3.0",
+    "serve-favicon": "^2.0.1",
+    "supertest": "^1.0.1"
   }
 }

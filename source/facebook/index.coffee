@@ -1,3 +1,7 @@
+async         = require 'async'
+request       = require 'request'
+randomstring  = require 'randomstring'
+
 debug = console.log
 
 common = require '../common'

@@ -1,0 +1,29 @@
+{
+  "name": "Account",
+  "plural": "accounts",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "facebook": {
+      "type": "string"
+    },
+    "google": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "facebook"
+    }
+  ],
+  "methods": []
+}
