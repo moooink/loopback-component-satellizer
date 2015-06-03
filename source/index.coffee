@@ -2,3 +2,4 @@
 
 module.exports =
   Facebook: require './facebook'
+  Google: require './google'

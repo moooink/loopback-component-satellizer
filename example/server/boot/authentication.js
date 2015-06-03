@@ -18,4 +18,19 @@ module.exports = function enableAuthentication(server) {
       }
     }
   });
+  // enable google
+  satellizer.Google({
+    model: server.models.Account,
+    google: {
+      credentials: server.settings.provider.google,
+      uri: '/google',
+      mapping: {
+        id: 'google',
+        email: 'email',
+        first_name: 'firstName',
+        last_name: 'lastName',
+        gender: 'gender'
+      }
+    }
+  });
 };
