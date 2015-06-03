@@ -1,11 +1,10 @@
 debug = console.log
 
-module.exports = (options) ->
+module.exports = (options, provider) ->
 
   Model = options.model
 
   authenticate = (account, callback) ->
-    debug 'authenticate', account.email
     ttl = 1000*60*60*24*7
     account.createAccessToken ttl, (err, token) ->
       return callback err if err

@@ -64,9 +64,11 @@ module.exports = (options) ->
         return callback err
       if found
         return link.existing profile, found, callback
+      #
       query =
-        where:
-          email: profile.email
+        where: {}
+      query.where[options.facebook.mapping.id] = profile.email
+      #
       Model.findOne query, (err, found) ->
         if err
           debug err
@@ -85,7 +87,7 @@ module.exports = (options) ->
 
   link.existing = (profile, account, callback) ->
     debug 'link.existing'
-    if account.facebook and account.facebook != profile.id
+    if account.facebook and account[options.facebook.mapping.id] != profile.id
       err = new Error 'account_conflict'
       err.status = 409
       debug err
@@ -94,7 +96,6 @@ module.exports = (options) ->
     account.save (err) ->
       debug err if err
       return callback err, account
-
 
   Model.facebook = (req, code, clientId, redirectUri, callback) ->
     debug "#{code}, #{clientId}, #{redirectUri}"
