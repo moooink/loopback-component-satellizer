@@ -1,4 +1,5 @@
 'use strict'
 
-module.exports = (options) ->
-  return
+module.exports =
+  Facebook: require './facebook'
+  Google: require './google'
