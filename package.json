@@ -1,5 +1,5 @@
 {
-  "name": "loopback-satellizer",
+  "name": "loopback-component-satellizer",
   "version": "0.0.1",
   "description": "A loopback module for satellizer",
   "main": "./lib/index.js",
