@@ -1,5 +1,6 @@
 async         = require 'async'
-debug         = require('debug') 'loopback:satellizer:google'
+debug         = require('debug') 'loopback:satellizer:twitter'
+qs            = require 'querystring'
 request       = require 'request'
 randomstring  = require 'randomstring'
 
@@ -10,29 +11,39 @@ module.exports = (options) ->
   Common      = common options
   Model       = options.model
 
-  credentials = options.google.credentials
+  credentials = options.twitter.credentials
+  callbackUrl = options.twitter.callbackUrl
 
-  fetchAccessToken = (code, clientId, redirectUri, callback) ->
-    debug 'fetchAccessToken'
+  handleFirstRequest = (callback) ->
     request.post
-      url: 'https://accounts.google.com/o/oauth2/token'
-      form:
-        code: code
-        client_id: clientId
-        client_secret: credentials.private
-        redirect_uri: redirectUri
-        grant_type: 'authorization_code'
-      json: true
-    , (err, res, token) ->
+      url: 'https://api.twitter.com/oauth/request_token'
+      oauth:
+        consumer_key: credentials.public
+        consumer_secret: credentials.private
+    , (err, res, body) ->
       return callback err if err
-      callback null, token.access_token
+      callback null, qs.parse body
+
+  fetchAccessToken = (oauthToken, oauthVerifier, callback) ->
+    request.post
+      url: 'https://api.twitter.com/oauth/access_token'
+      oauth:
+        consumer_key: credentials.public
+        consumer_secret: credentials.private
+        token: oauthToken
+        verifier: oauthVerifier
+    , (err, res, accessToken) ->
+      return callback err if err
+      callback null, qs.parse accessToken
 
   fetchProfile = (accessToken, callback) ->
     debug 'fetchProfile'
-    request.post
-      url: 'https://www.googleapis.com/plus/v1/people/me/openIdConnect'
-      headers:
-        Authorization: "Bearer: #{accessToken}"
+    request.get
+      url: 'https://api.twitter.com/1.1/users/show.json?screen_name=' + accessToken.screen_name
+      oauth:
+        consumer_key: credentials.public
+        consumer_secret: credentials.private
+        oauth_token: accessToken.oauth_token
       json: true
     , (err, res, profile) ->
       return callback err if err
@@ -54,7 +65,7 @@ module.exports = (options) ->
       #
       query =
         where: {}
-      query.where[options.google.mapping.id] = profile.email
+      query.where[options.twitter.mapping.id] = profile.id
       #
       Model.findOne query, (err, found) ->
         if err
@@ -66,29 +77,32 @@ module.exports = (options) ->
   link.create = (profile, callback) ->
     debug 'link.create', profile.id
     tmp =
+      email: "#{profile.id}@twitter.com"
       password: randomstring.generate()
-    Common.map options.google.mapping, profile, tmp
+    Common.map options.twitter.mapping, profile, tmp
     Model.create tmp, (err, created) ->
       debug err if err
       return callback err, created
 
   link.existing = (profile, account, callback) ->
     debug 'link.existing'
-    if account.google and account[options.google.mapping.id] != profile.id
+    if account[options.twitter.mapping.id] and account[options.twitter.mapping.id] != profile.id
       err = new Error 'account_conflict'
       err.status = 409
       debug err
       return callback err
-    Common.map options.google.mapping, profile, account
+    Common.map options.twitter.mapping, profile, account
     account.save (err) ->
       debug err if err
       return callback err, account
 
-  Model.google = (req, code, clientId, redirectUri, callback) ->
-    debug "#{code}, #{clientId}, #{redirectUri}"
+  Model.twitter = (req, oauthToken, oauthVerifier, callback) ->
+    debug "#{oauthToken}, #{oauthVerifier}"
+    # Initial request for satellizer
+    return handleFirstRequest callback if not oauthToken or not oauthVerifier
     async.waterfall [
       (done) ->
-        fetchAccessToken code, clientId, redirectUri, done
+        fetchAccessToken oauthToken, oauthVerifier, done
       (accessToken, done) ->
         fetchProfile accessToken, done
       (profile, done) ->
@@ -97,7 +111,7 @@ module.exports = (options) ->
         Common.authenticate account, done
     ], callback
 
-  Model.remoteMethod 'google',
+  Model.remoteMethod 'twitter',
     accepts: [
       {
         arg: 'req'
@@ -106,19 +120,13 @@ module.exports = (options) ->
           source: 'req'
       }
       {
-        arg: 'code'
+        arg: 'oauth_token'
         type: 'string'
         http:
           source: 'form'
       }
       {
-        arg: 'clientId'
-        type: 'string'
-        http:
-          source: 'form'
-      }
-      {
-        arg: 'redirectUri'
+        arg: 'oauth_verifier'
         type: 'string'
         http:
           source: 'form'
@@ -130,6 +138,6 @@ module.exports = (options) ->
       root: true
     http:
       verb: 'post'
-      path: options.google.uri
+      path: options.twitter.uri
 
   return

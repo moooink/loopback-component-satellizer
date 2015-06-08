@@ -33,4 +33,17 @@ module.exports = function enableAuthentication(server) {
       }
     }
   });
+  // enable twitter
+  satellizer.Twitter({
+    model: server.models.Account,
+    twitter: {
+      credentials: server.settings.provider.twitter,
+      uri: '/twitter',
+      mapping: {
+        id: 'twitter',
+        screen_name: 'firstName',
+        screen_name: 'lastName'
+      }
+    }
+  });
 };
