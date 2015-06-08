@@ -1,8 +1,8 @@
 async         = require 'async'
+debug         = require('debug') 'loopback:satellizer:twitter'
+qs            = require 'querystring'
 request       = require 'request'
 randomstring  = require 'randomstring'
-
-debug = console.log
 
 common = require '../common'
 
@@ -20,7 +20,6 @@ module.exports = (options) ->
       oauth:
         consumer_key: credentials.public
         consumer_secret: credentials.private
-        callback: callbackUrl
     , (err, res, body) ->
       return callback err if err
       callback null, qs.parse body
@@ -103,7 +102,7 @@ module.exports = (options) ->
     return handleFirstRequest callback if not oauthToken or not oauthVerifier
     async.waterfall [
       (done) ->
-        fetchAccessToken code, clientId, redirectUri, done
+        fetchAccessToken oauthToken, oauthVerifier, done
       (accessToken, done) ->
         fetchProfile accessToken, done
       (profile, done) ->
@@ -111,3 +110,34 @@ module.exports = (options) ->
       (account, done) ->
         Common.authenticate account, done
     ], callback
+
+  Model.remoteMethod 'twitter',
+    accepts: [
+      {
+        arg: 'req'
+        type: 'object'
+        http:
+          source: 'req'
+      }
+      {
+        arg: 'oauth_token'
+        type: 'string'
+        http:
+          source: 'form'
+      }
+      {
+        arg: 'oauth_verifier'
+        type: 'string'
+        http:
+          source: 'form'
+      }
+    ]
+    returns:
+      arg: 'result'
+      type: 'object'
+      root: true
+    http:
+      verb: 'post'
+      path: options.twitter.uri
+
+  return

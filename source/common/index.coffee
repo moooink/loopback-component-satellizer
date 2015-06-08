@@ -1,4 +1,4 @@
-debug = console.log
+debug         = require('debug') 'loopback:satellizer:common'
 
 module.exports = (options, provider) ->
 

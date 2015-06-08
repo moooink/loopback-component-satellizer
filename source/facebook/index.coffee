@@ -1,8 +1,7 @@
 async         = require 'async'
+debug         = require('debug') 'loopback:satellizer:facebook'
 request       = require 'request'
 randomstring  = require 'randomstring'
-
-debug = console.log
 
 common = require '../common'
 

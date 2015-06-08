@@ -39,6 +39,13 @@
       "principalId": "$unauthenticated",
       "permission": "ALLOW",
       "property": "google"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "twitter"
     }
   ],
   "methods": []
