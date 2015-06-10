@@ -10,7 +10,7 @@
     },
     {
       "name": "Jonathan Beurel",
-      "email": ""
+      "email": "bejonster@gmail.com"
     }
   ],
   "scripts": {
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moooink/loopback-satellizer.git"
+    "url": "git+https://github.com/moooink/loopback-component-satellizer.git"
   },
   "keywords": [
     "loopback",
@@ -32,9 +32,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/moooink/loopback-satellizer/issues"
+    "url": "https://github.com/moooink/loopback-component-satellizer/issues"
   },
-  "homepage": "https://github.com/moooink/loopback-satellizer#readme",
+  "homepage": "https://github.com/moooink/loopback-component-satellizer#readme",
   "dependencies": {
     "async": "^1.2.0",
     "coffee-script": "^1.9.3",
