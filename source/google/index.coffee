@@ -14,8 +14,7 @@ module.exports = (options) ->
 
   fetchAccessToken = (code, clientId, redirectUri, callback) ->
     debug 'fetchAccessToken'
-    request.post
-      url: 'https://accounts.google.com/o/oauth2/token'
+    request.post 'https://accounts.google.com/o/oauth2/token',
       form:
         code: code
         client_id: clientId
@@ -29,10 +28,10 @@ module.exports = (options) ->
 
   fetchProfile = (accessToken, callback) ->
     debug 'fetchProfile'
-    request.post
+    request.get
       url: 'https://www.googleapis.com/plus/v1/people/me/openIdConnect'
       headers:
-        Authorization: "Bearer: #{accessToken}"
+        Authorization: "Bearer #{accessToken}"
       json: true
     , (err, res, profile) ->
       return callback err if err
@@ -54,7 +53,7 @@ module.exports = (options) ->
       #
       query =
         where: {}
-      query.where[options.google.mapping.id] = profile.email
+      query.where[options.google.mapping.sub] = profile.sub
       #
       Model.findOne query, (err, found) ->
         if err
@@ -74,7 +73,7 @@ module.exports = (options) ->
 
   link.existing = (profile, account, callback) ->
     debug 'link.existing'
-    if account.google and account[options.google.mapping.id] != profile.id
+    if account.google and account[options.google.mapping.sub] != profile.sub
       err = new Error 'account_conflict'
       err.status = 409
       debug err
