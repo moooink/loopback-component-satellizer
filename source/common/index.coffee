@@ -5,7 +5,7 @@ module.exports = (options, provider) ->
   Model = options.model
 
   authenticate = (account, callback) ->
-    ttl = 1000*60*60*24*7
+    ttl = account.constructor.settings.maxTTL
     account.createAccessToken ttl, (err, token) ->
       return callback err if err
       Model.app.models.AccessToken.find {}, (err, list) ->
