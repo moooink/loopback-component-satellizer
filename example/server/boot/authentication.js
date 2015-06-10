@@ -25,7 +25,7 @@ module.exports = function enableAuthentication(server) {
       credentials: server.settings.provider.google,
       uri: '/google',
       mapping: {
-        id: 'google',
+        sub: 'google',
         email: 'email',
         first_name: 'firstName',
         last_name: 'lastName',

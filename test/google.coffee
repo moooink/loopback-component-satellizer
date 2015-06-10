@@ -32,7 +32,7 @@ describe 'Google module', ->
     answer = null
 
     profile =
-      id: 'profile_id'
+      sub: 'profile_id'
       email: 'user@example.com'
       first_name: 'my_first_name'
       last_name: 'my_last_name'
@@ -53,7 +53,7 @@ describe 'Google module', ->
 
     beforeEach ->
       second = nock 'https://www.googleapis.com'
-      .post '/plus/v1/people/me/openIdConnect'
+      .get '/plus/v1/people/me/openIdConnect'
       .reply 200, profile
 
     beforeEach (done) ->
@@ -94,7 +94,7 @@ describe 'Google module', ->
       , (err, found) ->
         expect(err).to.not.exist
         expect(found).to.exist
-        expect(found.google).to.eql profile.id
+        expect(found.google).to.eql profile.sub
         expect(found.firstName).to.eql profile.first_name
         expect(found.lastName).to.eql profile.last_name
         expect(found.gender).to.eql profile.gender
