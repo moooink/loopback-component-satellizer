@@ -34,8 +34,8 @@ describe 'Google module', ->
     profile =
       sub: 'profile_id'
       email: 'user@example.com'
-      first_name: 'my_first_name'
-      last_name: 'my_last_name'
+      given_name: 'my_first_name'
+      family_name: 'my_last_name'
       birthday: new Date()
       gender: 'male'
 
@@ -95,7 +95,7 @@ describe 'Google module', ->
         expect(err).to.not.exist
         expect(found).to.exist
         expect(found.google).to.eql profile.sub
-        expect(found.firstName).to.eql profile.first_name
-        expect(found.lastName).to.eql profile.last_name
+        expect(found.firstName).to.eql profile.given_name
+        expect(found.lastName).to.eql profile.family_name
         expect(found.gender).to.eql profile.gender
         done err
