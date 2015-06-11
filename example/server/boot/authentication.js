@@ -27,8 +27,8 @@ module.exports = function enableAuthentication(server) {
       mapping: {
         sub: 'google',
         email: 'email',
-        first_name: 'firstName',
-        last_name: 'lastName',
+        given_name: 'firstName',
+        family_name: 'lastName',
         gender: 'gender'
       }
     }
