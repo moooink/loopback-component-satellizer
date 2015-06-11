@@ -66,7 +66,7 @@ module.exports = (options) ->
       #
       query =
         where: {}
-      query.where[options.facebook.mapping.id] = profile.email
+      query.where[options.facebook.mapping.email] = profile.email
       #
       Model.findOne query, (err, found) ->
         if err
