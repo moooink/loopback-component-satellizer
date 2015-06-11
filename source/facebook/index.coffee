@@ -27,7 +27,7 @@ module.exports = (options) ->
         debug err
         return callback err
       if res.statusCode isnt 200
-        err = new Error accessToken.error.message
+        err = new Error accessToken
         err.status = 500
         debug err
         return callback err
@@ -44,7 +44,7 @@ module.exports = (options) ->
         debug err
         return callback err
       if res.statusCode isnt 200
-        err = new Error profile.error.message
+        err = new Error profile
         err.status = 500
         debug err
         return callback err
