@@ -53,7 +53,7 @@ module.exports = (options) ->
       #
       query =
         where: {}
-      query.where[options.google.mapping.sub] = profile.sub
+      query.where[options.google.mapping.email] = profile.email
       #
       Model.findOne query, (err, found) ->
         if err
