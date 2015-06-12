@@ -11,7 +11,9 @@
 
 ## Install the component
 
-    npm install --save loopback-component-satellizer
+```bash
+npm install --save loopback-component-satellizer
+```
 
 ## Configuration for facebook
 
@@ -55,7 +57,9 @@ Then configure satellizer in the client and take care of the conflicts between t
 
 In your loopback server boot folder, create or reuse the authentication.js (or whatever name you want), load the component
 
-    var satellizer = require('loopback-component-satellizer');
+```javascript
+var satellizer = require('loopback-component-satellizer');
+```
 
 and then configure the google connector
 
