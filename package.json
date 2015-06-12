@@ -29,8 +29,8 @@
     "twitter",
     "google"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Moooink",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/moooink/loopback-component-satellizer/issues"
   },
