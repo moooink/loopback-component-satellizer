@@ -17,33 +17,37 @@
 
 In your loopback server boot folder, create or reuse the authentication.js (or whatever name you want), load the component
 
-    var satellizer = require('loopback-component-satellizer');
+```javascript
+var satellizer = require('loopback-component-satellizer');
+```
 
 and then configure the facebook connector
 
-    satellizer.Facebook({
-      // The model that extends User model and where you want to bind the facebook connector
-      model: server.models.Account,
-      facebook: {
-        // Put here the credentials used to connect to Facebook.
-        // You can follow the example and put it in your config.json
-        credentials: {
-          public: 'the_client_id',
-          private: 'the_client_secret'
-        },
-        // The uri of the facebook connexion method
-        uri: '/facebook',
-        // How you want to map the facebook profile on your model
-        // The key is the facebook profile key and the value is your model key
-        mapping: {
-          id: 'facebook',
-          email: 'email',
-          first_name: 'firstName',
-          last_name: 'lastName',
-          gender: 'gender'
-        }
-      }
-    });
+```javascript
+satellizer.Facebook({
+  // The model that extends User model and where you want to bind the facebook connector
+  model: server.models.Account,
+  facebook: {
+    // Put here the credentials used to connect to Facebook.
+    // You can follow the example and put it in your config.json
+    credentials: {
+      public: 'the_client_id',
+      private: 'the_client_secret'
+    },
+    // The uri of the facebook connexion method
+    uri: '/facebook',
+    // How you want to map the facebook profile on your model
+    // The key is the facebook profile key and the value is your model key
+    mapping: {
+      id: 'facebook',
+      email: 'email',
+      first_name: 'firstName',
+      last_name: 'lastName',
+      gender: 'gender'
+    }
+  }
+});
+```
 
 Then configure satellizer in the client and take care of the conflicts between the satellizer authorization token and the loopback authorization token.
 
@@ -55,28 +59,30 @@ In your loopback server boot folder, create or reuse the authentication.js (or w
 
 and then configure the google connector
 
-    satellizer.Google({
-      // The model that extends User model and where you want to bind the google connector
-      model: server.models.Account,
-      facebook: {
-        // Put here the credentials used to connect to Google.
-        // You can follow the example and put it in your config.json
-        credentials: {
-          public: 'the_client_id',
-          private: 'the_client_secret'
-        },
-        // The uri of the google connexion method
-        uri: '/google',
-        // How you want to map the google profile on your model
-        // The key is the google profile key and the value is your model key
-        mapping: {
-          sub: 'google',
-          email: 'email',
-          given_name: 'firstName',
-          family_name: 'lastName',
-          gender: 'gender'
-        }
-      }
-    });
+```javascript
+satellizer.Google({
+  // The model that extends User model and where you want to bind the google connector
+  model: server.models.Account,
+  facebook: {
+    // Put here the credentials used to connect to Google.
+    // You can follow the example and put it in your config.json
+    credentials: {
+      public: 'the_client_id',
+      private: 'the_client_secret'
+    },
+    // The uri of the google connexion method
+    uri: '/google',
+    // How you want to map the google profile on your model
+    // The key is the google profile key and the value is your model key
+    mapping: {
+      sub: 'google',
+      email: 'email',
+      given_name: 'firstName',
+      family_name: 'lastName',
+      gender: 'gender'
+    }
+  }
+});
+```
 
 Then configure satellizer in the client and take care of the conflicts between the satellizer authorization token and the loopback authorization token.
