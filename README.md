@@ -9,6 +9,8 @@
 
 # How to use it
 
+![Example explorer](./doc/images/screenshot.png)
+
 ## Install the component
 
 ```bash
@@ -51,6 +53,19 @@ satellizer.Facebook({
 });
 ```
 
+Add the ACLs to allow (or not) the access to the API
+
+```javascript
+"acls": [
+  {
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$everyone",
+    "permission": "ALLOW",
+    "property": "facebook"
+  },
+```
+
 Then configure satellizer in the client and take care of the conflicts between the satellizer authorization token and the loopback authorization token.
 
 ## Configuration for Google+
@@ -87,6 +102,19 @@ satellizer.Google({
     }
   }
 });
+```
+
+Add the ACLs to allow (or not) the access to the API
+
+```javascript
+"acls": [
+  {
+    "accessType": "EXECUTE",
+    "principalType": "ROLE",
+    "principalId": "$everyone",
+    "permission": "ALLOW",
+    "property": "google"
+  },
 ```
 
 Then configure satellizer in the client and take care of the conflicts between the satellizer authorization token and the loopback authorization token.

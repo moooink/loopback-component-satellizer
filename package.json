@@ -55,10 +55,11 @@
     "loopback": "^2.18.0",
     "loopback-boot": "^2.8.0",
     "loopback-datasource-juggler": "^2.29.2",
-    "strong-express-metrics": "^1.1.0",
+    "loopback-explorer": "^1.7.2",
     "mocha": "^2.2.5",
     "nock": "^2.3.0",
     "serve-favicon": "^2.0.1",
+    "strong-express-metrics": "^1.1.0",
     "supertest": "^1.0.1"
   }
 }
