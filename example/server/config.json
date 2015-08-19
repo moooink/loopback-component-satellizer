@@ -27,7 +27,8 @@
   "provider": {
     "facebook": {
       "public": "this_is_a_public_key",
-      "private": "this_is_a_private_key"
+      "private": "this_is_a_private_key",
+      "fields": ["email"]
     },
     "google": {
       "public": "this_is_a_public_key",

@@ -47,7 +47,7 @@ describe 'Facebook module', ->
 
     beforeEach ->
       second = nock 'https://graph.facebook.com'
-      .get '/v2.3/me?token=my_wonderfull_token'
+      .get '/v2.3/me?token=my_wonderfull_token&fields=email'
       .reply 200, profile
 
     beforeEach (done) ->

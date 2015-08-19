@@ -7,7 +7,11 @@ module.exports = function enableAuthentication(server) {
   satellizer.Facebook({
     model: server.models.Account,
     facebook: {
-      credentials: server.settings.provider.facebook,
+      credentials: {
+        public: server.settings.provider.facebook.public,
+        private: server.settings.provider.facebook.private
+      },
+      fields: server.settings.provider.facebook.fields,
       uri: '/facebook',
       mapping: {
         id: 'facebook',

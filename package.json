@@ -1,6 +1,6 @@
 {
   "name": "loopback-component-satellizer",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A loopback module for satellizer",
   "main": "./lib/index.js",
   "contributors": [
@@ -39,13 +39,13 @@
     "async": "^1.2.0",
     "coffee-script": "^1.9.3",
     "debug": "^2.2.0",
-    "qs": "^3.1.0",
+    "qs": "^4.0.0",
     "querystring": "^0.2.0",
     "randomstring": "^1.0.6",
     "request": "^2.57.0"
   },
   "devDependencies": {
-    "chai": "^2.3.0",
+    "chai": "^3.2.0",
     "compression": "^1.0.3",
     "cors": "^2.5.2",
     "errorhandler": "^1.1.1",
@@ -59,7 +59,7 @@
     "mocha": "^2.2.5",
     "nock": "^2.3.0",
     "serve-favicon": "^2.0.1",
-    "strong-express-metrics": "^1.1.0",
+    "strong-express-metrics": "^2.0.1",
     "supertest": "^1.0.1"
   }
 }

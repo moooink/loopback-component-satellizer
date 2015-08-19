@@ -37,8 +37,11 @@ module.exports = (options) ->
     debug 'fetchProfile'
     params =
       url: 'https://graph.facebook.com/v2.3/me'
-      qs: accessToken
+      qs:
+        token: accessToken.token
       json: true
+    if options.facebook.fields?.length > 0
+      params.qs.fields = options.facebook.fields.join ','
     request.get params, (err, res, profile) ->
       if err
         debug err
