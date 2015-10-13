@@ -1,5 +1,51 @@
 {
   "loopback-component-explorer": {
     "mountPath": "/explorer"
+  },
+  "loopback-component-satellizer": {
+    "facebook": {
+      "model": "Account",
+      "credentials": {
+        "public": "this_is_a_client_id",
+        "private": "this_is_a_private_key"
+      },
+      "version": "v2.3",
+      "fields": ["email"],
+      "uri": "/facebook",
+      "mapping": {
+        "id": "facebook",
+        "email": "email",
+        "first_name": "firstName",
+        "last_name": "lastName",
+        "gender": "gender"
+      }
+    },
+    "google": {
+      "model": "Account",
+      "credentials": {
+        "public": "this_is_a_client_id",
+        "private": "this_is_a_private_key"
+      },
+      "uri": "/google",
+      "mapping": {
+        "sub": "google",
+        "email": "email",
+        "given_name": "firstName",
+        "family_name": "lastName",
+        "gender": "gender"
+      }
+    },
+    "twitter": {
+      "model": "Account",
+      "credentials": {
+        "public": "this_is_a_client_id",
+        "private": "this_is_a_private_key"
+      },
+      "uri": "/twitter",
+      "mapping": {
+        "id": "twitter",
+        "screen_name": "firstName"
+      }
+    }
   }
 }
