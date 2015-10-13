@@ -34,6 +34,18 @@
         "family_name": "lastName",
         "gender": "gender"
       }
+    },
+    "twitter": {
+      "model": "Account",
+      "credentials": {
+        "public": "this_is_a_client_id",
+        "private": "this_is_a_private_key"
+      },
+      "uri": "/twitter",
+      "mapping": {
+        "id": "twitter",
+        "screen_name": "firstName"
+      }
     }
   }
 }

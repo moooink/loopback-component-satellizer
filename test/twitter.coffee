@@ -21,9 +21,6 @@ describe 'Twitter module', ->
     agent   = request app
     Account = app.models.Account
 
-  it 'should exist', ->
-    expect(component.Twitter).to.exist
-
   it 'should populate model', ->
     expect(Account).to.exist
     expect(Account.twitter).to.exist
