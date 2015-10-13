@@ -7,6 +7,7 @@ common = require '../common'
 
 module.exports = (options) ->
 
+  version     = if options.facebook.version then options.facebook.version else 'v2.3'
   Common      = common options
   Model       = options.model
 
@@ -15,53 +16,55 @@ module.exports = (options) ->
   fetchAccessToken = (code, clientId, redirectUri, callback) ->
     debug 'fetchAccessToken'
     params =
-      url: 'https://graph.facebook.com/v2.3/oauth/access_token'
+      url: "https://graph.facebook.com/#{version}/oauth/access_token"
       qs:
         code: code
         client_id: clientId
         client_secret: credentials.private
         redirect_uri: redirectUri
       json: true
+    if options.facebook.fields?.length > 0
+      params.qs.fields = options.facebook.fields.join ','
     request.get params, (err, res, accessToken) ->
       if err
-        debug err
+        debug JSON.stringify err
         return callback err
       if res.statusCode isnt 200
         err = new Error accessToken
         err.status = 500
-        debug err
+        debug JSON.stringify err
         return callback err
       callback null, accessToken
 
   fetchProfile = (accessToken, callback) ->
     debug 'fetchProfile'
     params =
-      url: 'https://graph.facebook.com/v2.3/me'
+      url: "https://graph.facebook.com/#{version}/me"
       qs: accessToken
       json: true
     if options.facebook.fields?.length > 0
       params.qs.fields = options.facebook.fields.join ','
     request.get params, (err, res, profile) ->
       if err
-        debug err
+        debug JSON.stringify err
         return callback err
       if res.statusCode isnt 200
         err = new Error profile
         err.status = 500
-        debug err
+        debug JSON.stringify err
         return callback err
       callback null, profile
 
   link = (req, profile, callback) ->
-    debug 'link'
+    debug 'link', JSON.stringify(profile)
     Common.current req, (err, found) ->
       if err
-        debug err
+        debug JSON.stringify err
         return callback err
       if found is null
         err = new Error 'not_an_account'
         err.status = 409
-        debug err
+        debug JSON.stringify err
         return callback err
       if found
         return link.existing profile, found, callback
@@ -72,30 +75,30 @@ module.exports = (options) ->
       #
       Model.findOne query, (err, found) ->
         if err
-          debug err
+          debug JSON.stringify err
           return callback err
         return link.create profile, callback if not found
         return link.existing profile, found, callback
 
   link.create = (profile, callback) ->
-    debug 'link.create', profile.id
+    debug 'link.create', JSON.stringify(profile)
     tmp =
       password: randomstring.generate()
     Common.map options.facebook.mapping, profile, tmp
     Model.create tmp, (err, created) ->
-      debug err if err
+      debug JSON.stringify err if err
       return callback err, created
 
   link.existing = (profile, account, callback) ->
-    debug 'link.existing'
+    debug 'link.existing', JSON.stringify(profile)
     if account.facebook and account[options.facebook.mapping.id] != profile.id
       err = new Error 'account_conflict'
       err.status = 409
-      debug err
+      debug JSON.stringify err
       return callback err
     Common.map options.facebook.mapping, profile, account
     account.save (err) ->
-      debug err if err
+      debug JSON.stringify err if err
       return callback err, account
 
   Model.facebook = (req, code, clientId, redirectUri, callback) ->

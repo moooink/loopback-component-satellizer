@@ -41,7 +41,7 @@ describe 'Facebook module', ->
 
     beforeEach ->
       first = nock 'https://graph.facebook.com'
-      .get '/v2.3/oauth/access_token?code=this_is_a_code&client_id=this_is_a_client_id&client_secret=this_is_a_private_key&redirect_uri=this_is_the_uri'
+      .get '/v2.3/oauth/access_token?code=this_is_a_code&client_id=this_is_a_client_id&client_secret=this_is_a_private_key&redirect_uri=this_is_the_uri&fields=email'
       .reply 200,
         token: 'my_wonderfull_token'
 

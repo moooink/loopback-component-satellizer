@@ -39,7 +39,8 @@
     "async": "^1.2.0",
     "coffee-script": "^1.9.3",
     "debug": "^2.2.0",
-    "qs": "^4.0.0",
+    "loopback-component-explorer": "^2.1.1",
+    "qs": "^5.2.0",
     "querystring": "^0.2.0",
     "randomstring": "^1.0.6",
     "request": "^2.57.0"
@@ -55,7 +56,7 @@
     "loopback": "^2.18.0",
     "loopback-boot": "^2.8.0",
     "loopback-datasource-juggler": "^2.29.2",
-    "loopback-explorer": "^1.7.2",
+    "loopback-explorer": "^2.0.2",
     "mocha": "^2.2.5",
     "nock": "^2.3.0",
     "serve-favicon": "^2.0.1",
