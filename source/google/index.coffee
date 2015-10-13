@@ -5,12 +5,12 @@ randomstring  = require 'randomstring'
 
 common = require '../common'
 
-module.exports = (options) ->
+module.exports = (server, options) ->
 
-  Common      = common options
-  Model       = options.model
+  Common      = common server, options
+  Model       = server.models[options.model]
 
-  credentials = options.google.credentials
+  credentials = options.credentials
 
   fetchAccessToken = (code, clientId, redirectUri, callback) ->
     debug 'fetchAccessToken'
@@ -53,7 +53,7 @@ module.exports = (options) ->
       #
       query =
         where: {}
-      query.where[options.google.mapping.email] = profile.email
+      query.where[options.mapping.email] = profile.email
       #
       Model.findOne query, (err, found) ->
         if err
@@ -66,19 +66,19 @@ module.exports = (options) ->
     debug 'link.create', profile.id
     tmp =
       password: randomstring.generate()
-    Common.map options.google.mapping, profile, tmp
+    Common.map options.mapping, profile, tmp
     Model.create tmp, (err, created) ->
       debug err if err
       return callback err, created
 
   link.existing = (profile, account, callback) ->
     debug 'link.existing'
-    if account.google and account[options.google.mapping.sub] != profile.sub
+    if account.google and account[options.mapping.sub] != profile.sub
       err = new Error 'account_conflict'
       err.status = 409
       debug err
       return callback err
-    Common.map options.google.mapping, profile, account
+    Common.map options.mapping, profile, account
     account.save (err) ->
       debug err if err
       return callback err, account
@@ -129,6 +129,6 @@ module.exports = (options) ->
       root: true
     http:
       verb: 'post'
-      path: options.google.uri
+      path: options.uri
 
   return

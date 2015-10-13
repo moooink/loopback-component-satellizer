@@ -5,13 +5,11 @@ randomstring  = require 'randomstring'
 
 common = require '../common'
 
-module.exports = (options) ->
+module.exports = (server, options) ->
 
-  version     = if options.facebook.version then options.facebook.version else 'v2.3'
-  Common      = common options
-  Model       = options.model
-
-  credentials = options.facebook.credentials
+  version     = if options.version then options.version else 'v2.3'
+  Common      = common server, options
+  Model       = server.models[options.model]
 
   fetchAccessToken = (code, clientId, redirectUri, callback) ->
     debug 'fetchAccessToken'
@@ -20,11 +18,11 @@ module.exports = (options) ->
       qs:
         code: code
         client_id: clientId
-        client_secret: credentials.private
+        client_secret: options.credentials.private
         redirect_uri: redirectUri
       json: true
-    if options.facebook.fields?.length > 0
-      params.qs.fields = options.facebook.fields.join ','
+    if options.fields?.length > 0
+      params.qs.fields = options.fields.join ','
     request.get params, (err, res, accessToken) ->
       if err
         debug JSON.stringify err
@@ -42,8 +40,8 @@ module.exports = (options) ->
       url: "https://graph.facebook.com/#{version}/me"
       qs: accessToken
       json: true
-    if options.facebook.fields?.length > 0
-      params.qs.fields = options.facebook.fields.join ','
+    if options.fields?.length > 0
+      params.qs.fields = options.fields.join ','
     request.get params, (err, res, profile) ->
       if err
         debug JSON.stringify err
@@ -71,7 +69,7 @@ module.exports = (options) ->
       #
       query =
         where: {}
-      query.where[options.facebook.mapping.email] = profile.email
+      query.where[options.mapping.email] = profile.email
       #
       Model.findOne query, (err, found) ->
         if err
@@ -84,19 +82,19 @@ module.exports = (options) ->
     debug 'link.create', JSON.stringify(profile)
     tmp =
       password: randomstring.generate()
-    Common.map options.facebook.mapping, profile, tmp
+    Common.map options.mapping, profile, tmp
     Model.create tmp, (err, created) ->
       debug JSON.stringify err if err
       return callback err, created
 
   link.existing = (profile, account, callback) ->
     debug 'link.existing', JSON.stringify(profile)
-    if account.facebook and account[options.facebook.mapping.id] != profile.id
+    if account.facebook and account[options.mapping.id] != profile.id
       err = new Error 'account_conflict'
       err.status = 409
       debug JSON.stringify err
       return callback err
-    Common.map options.facebook.mapping, profile, account
+    Common.map options.mapping, profile, account
     account.save (err) ->
       debug JSON.stringify err if err
       return callback err, account
@@ -147,6 +145,6 @@ module.exports = (options) ->
       root: true
     http:
       verb: 'post'
-      path: options.facebook.uri
+      path: options.uri
 
   return
