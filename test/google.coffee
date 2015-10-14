@@ -17,9 +17,6 @@ describe 'Google module', ->
     agent   = request app
     Account = app.models.Account
 
-  it 'should exist', ->
-    expect(component.Google).to.exist
-
   it 'should populate model', ->
     expect(Account).to.exist
     expect(Account.google).to.exist

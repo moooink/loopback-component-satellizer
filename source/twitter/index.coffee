@@ -6,13 +6,13 @@ randomstring  = require 'randomstring'
 
 common = require '../common'
 
-module.exports = (options) ->
+module.exports = (server, options) ->
 
-  Common      = common options
-  Model       = options.model
+  Common      = common server, options
+  Model       = server.models[options.model]
 
-  credentials = options.twitter.credentials
-  callbackUrl = options.twitter.callbackUrl
+  credentials = options.credentials
+  callbackUrl = options.callbackUrl
 
   handleFirstRequest = (callback) ->
     request.post
@@ -65,7 +65,7 @@ module.exports = (options) ->
       #
       query =
         where: {}
-      query.where[options.twitter.mapping.id] = profile.id
+      query.where[options.mapping.id] = profile.id
       #
       Model.findOne query, (err, found) ->
         if err
@@ -79,19 +79,19 @@ module.exports = (options) ->
     tmp =
       email: "#{profile.id}@twitter.com"
       password: randomstring.generate()
-    Common.map options.twitter.mapping, profile, tmp
+    Common.map options.mapping, profile, tmp
     Model.create tmp, (err, created) ->
       debug err if err
       return callback err, created
 
   link.existing = (profile, account, callback) ->
     debug 'link.existing'
-    if account[options.twitter.mapping.id] and account[options.twitter.mapping.id] != profile.id
+    if account[options.mapping.id] and account[options.mapping.id] != profile.id
       err = new Error 'account_conflict'
       err.status = 409
       debug err
       return callback err
-    Common.map options.twitter.mapping, profile, account
+    Common.map options.mapping, profile, account
     account.save (err) ->
       debug err if err
       return callback err, account
@@ -138,6 +138,6 @@ module.exports = (options) ->
       root: true
     http:
       verb: 'post'
-      path: options.twitter.uri
+      path: options.uri
 
   return

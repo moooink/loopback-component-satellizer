@@ -1,8 +1,8 @@
 debug         = require('debug') 'loopback:satellizer:common'
 
-module.exports = (options, provider) ->
+module.exports = (server, options) ->
 
-  Model = options.model
+  Model = server.models[options.model]
 
   authenticate = (account, callback) ->
     ttl = account.constructor.settings.maxTTL

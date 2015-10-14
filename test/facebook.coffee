@@ -17,9 +17,6 @@ describe 'Facebook module', ->
     agent   = request app
     Account = app.models.Account
 
-  it 'should exist', ->
-    expect(component.Facebook).to.exist
-
   it 'should populate model', ->
     expect(Account).to.exist
     expect(Account.facebook).to.exist
