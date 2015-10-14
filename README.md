@@ -19,38 +19,28 @@ npm install --save loopback-component-satellizer
 
 ## Configuration for facebook
 
-In your loopback server boot folder, create or reuse the authentication.js (or whatever name you want), load the component
+In your loopback component-config.json file, add your configuration like this
 
 ```javascript
-var satellizer = require('loopback-component-satellizer');
-```
-
-and then configure the facebook connector
-
-```javascript
-satellizer.Facebook({
-  // The model that extends User model and where you want to bind the facebook connector
-  model: server.models.Account,
-  facebook: {
-    // Put here the credentials used to connect to Facebook.
-    // You can follow the example and put it in your config.json
-    credentials: {
-      public: 'the_client_id',
-      private: 'the_client_secret'
+"loopback-component-satellizer": {
+  "facebook": {
+    "model": "Account",
+    "credentials": {
+      "public": "this_is_a_client_id",
+      "private": "this_is_a_private_key"
     },
-    // The uri of the facebook connexion method
-    uri: '/facebook',
-    // How you want to map the facebook profile on your model
-    // The key is the facebook profile key and the value is your model key
-    mapping: {
-      id: 'facebook',
-      email: 'email',
-      first_name: 'firstName',
-      last_name: 'lastName',
-      gender: 'gender'
+    "version": "v2.3",
+    "fields": ["email"],
+    "uri": "/facebook",
+    "mapping": {
+      "id": "facebook",
+      "email": "email",
+      "first_name": "firstName",
+      "last_name": "lastName",
+      "gender": "gender"
     }
   }
-});
+}
 ```
 
 Add the ACLs to allow (or not) the access to the API
@@ -70,38 +60,26 @@ Then configure satellizer in the client and take care of the conflicts between t
 
 ## Configuration for Google+
 
-In your loopback server boot folder, create or reuse the authentication.js (or whatever name you want), load the component
+In your loopback component-config.json file, load the component
 
 ```javascript
-var satellizer = require('loopback-component-satellizer');
-```
-
-and then configure the google connector
-
-```javascript
-satellizer.Google({
-  // The model that extends User model and where you want to bind the google connector
-  model: server.models.Account,
-  facebook: {
-    // Put here the credentials used to connect to Google.
-    // You can follow the example and put it in your config.json
-    credentials: {
-      public: 'the_client_id',
-      private: 'the_client_secret'
+"loopback-component-satellizer": {
+  "google": {
+    "model": "Account",
+    "credentials": {
+      "public": "this_is_a_client_id",
+      "private": "this_is_a_private_key"
     },
-    // The uri of the google connexion method
-    uri: '/google',
-    // How you want to map the google profile on your model
-    // The key is the google profile key and the value is your model key
-    mapping: {
-      sub: 'google',
-      email: 'email',
-      given_name: 'firstName',
-      family_name: 'lastName',
-      gender: 'gender'
+    "uri": "/google",
+    "mapping": {
+      "sub": "google",
+      "email": "email",
+      "given_name": "firstName",
+      "family_name": "lastName",
+      "gender": "gender"
     }
   }
-});
+}
 ```
 
 Add the ACLs to allow (or not) the access to the API
