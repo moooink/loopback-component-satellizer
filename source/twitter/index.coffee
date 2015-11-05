@@ -111,6 +111,38 @@ module.exports = (server, options) ->
         Common.authenticate account, done
     ], callback
 
+  Model['twitter-get'] = Model.twitter
+
+  Model.remoteMethod 'twitter-get',
+    accepts: [
+      {
+        arg: 'req'
+        type: 'object'
+        http:
+          source: 'req'
+      }
+      {
+        arg: 'oauth_token'
+        type: 'string'
+        http:
+          source: 'query'
+      }
+      {
+        arg: 'oauth_verifier'
+        type: 'string'
+        http:
+          source: 'query'
+      }
+    ]
+    returns:
+      arg: 'result'
+      type: 'object'
+      root: true
+    http:
+      verb: 'get'
+      path: options.uri
+
+
   Model.remoteMethod 'twitter',
     accepts: [
       {

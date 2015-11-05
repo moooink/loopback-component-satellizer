@@ -38,6 +38,13 @@
       "principalType": "ROLE",
       "principalId": "$unauthenticated",
       "permission": "ALLOW",
+      "property": "facebook-get"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
       "property": "google"
     },
     {
@@ -45,7 +52,21 @@
       "principalType": "ROLE",
       "principalId": "$unauthenticated",
       "permission": "ALLOW",
+      "property": "google-get"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
       "property": "twitter"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "twitter-get"
     }
   ],
   "methods": []

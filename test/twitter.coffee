@@ -37,14 +37,28 @@ describe 'Twitter module', ->
       .post '/oauth/request_token'
       .reply 200, 'oauth_token=oauth_token&oauth_verifier=oauth_verifier'
 
-    it 'should return the token', (done) ->
-      agent.post '/api/accounts/twitter'
-      .end (err, res) ->
-        expect(err).to.not.exist
-        expect(res.statusCode).to.eql 200
-        expect(res.body).to.exist
-        expect(first.isDone()).to.eql true
-        done err
+    describe 'with POST verb', ->
+
+      it 'should return the token', (done) ->
+        agent.post '/api/accounts/twitter'
+        .end (err, res) ->
+          expect(err).to.not.exist
+          expect(res.statusCode).to.eql 200
+          expect(res.body).to.exist
+          expect(first.isDone()).to.eql true
+          done err
+
+    describe 'with GET verb', ->
+
+      it 'should return the token', (done) ->
+        agent.get '/api/accounts/twitter'
+        .end (err, res) ->
+          expect(err).to.not.exist
+          expect(res.statusCode).to.eql 200
+          expect(res.body).to.exist
+          expect(first.isDone()).to.eql true
+          done err
+
 
   describe 'the second call', ->
 
@@ -58,14 +72,30 @@ describe 'Twitter module', ->
       .get '/1.1/users/show.json?screen_name=screen_name'
       .reply 200, profile
 
-    it 'should create the player', (done) ->
-      agent.post '/api/accounts/twitter'
-      .send
-        oauth_token: 'oauthToken'
-        oauth_verifier: 'oauthVerifier'
-      .end (err, res) ->
-        expect(err).to.not.exist
-        expect(res.statusCode).to.eql 200
-        expect(second.isDone()).to.eql true
-        expect(third.isDone()).to.eql true
-        done err
+    describe 'with POST verb', ->
+
+      it 'should create the player', (done) ->
+        agent.post '/api/accounts/twitter'
+        .send
+          oauth_token: 'oauthToken'
+          oauth_verifier: 'oauthVerifier'
+        .end (err, res) ->
+          expect(err).to.not.exist
+          expect(res.statusCode).to.eql 200
+          expect(second.isDone()).to.eql true
+          expect(third.isDone()).to.eql true
+          done err
+
+    describe 'with GET verb', ->
+
+      it 'should create the player', (done) ->
+        agent.get '/api/accounts/twitter'
+        .query
+          oauth_token: 'oauthToken'
+          oauth_verifier: 'oauthVerifier'
+        .end (err, res) ->
+          expect(err).to.not.exist
+          expect(res.statusCode).to.eql 200
+          expect(second.isDone()).to.eql true
+          expect(third.isDone()).to.eql true
+          done err

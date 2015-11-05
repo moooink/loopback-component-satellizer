@@ -96,6 +96,43 @@ module.exports = (server, options) ->
         Common.authenticate account, done
     ], callback
 
+  Model['google-get'] = Model.google
+
+  Model.remoteMethod 'google-get',
+    accepts: [
+      {
+        arg: 'req'
+        type: 'object'
+        http:
+          source: 'req'
+      }
+      {
+        arg: 'code'
+        type: 'string'
+        http:
+          source: 'query'
+      }
+      {
+        arg: 'clientId'
+        type: 'string'
+        http:
+          source: 'query'
+      }
+      {
+        arg: 'redirectUri'
+        type: 'string'
+        http:
+          source: 'query'
+      }
+    ]
+    returns:
+      arg: 'result'
+      type: 'object'
+      root: true
+    http:
+      verb: 'get'
+      path: options.uri
+
   Model.remoteMethod 'google',
     accepts: [
       {
