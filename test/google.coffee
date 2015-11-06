@@ -105,8 +105,6 @@ describe 'Google module', ->
         agent.get '/api/accounts/google'
         .query
           code: 'this_is_a_code'
-          clientId: 'this_is_a_client_id'
-          redirectUri: 'this_is_the_uri'
         .end (err, res) ->
           answer =
             err: err

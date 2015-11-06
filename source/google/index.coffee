@@ -84,7 +84,7 @@ module.exports = (server, options) ->
       return callback err, account
 
   Model.google = (req, code, clientId, redirectUri, callback) ->
-    debug "#{code}, #{clientId}, #{redirectUri}"
+    debug 'google', "#{code}, #{clientId}, #{redirectUri}"
     async.waterfall [
       (done) ->
         fetchAccessToken code, clientId, redirectUri, done
@@ -96,7 +96,14 @@ module.exports = (server, options) ->
         Common.authenticate account, done
     ], callback
 
-  Model['google-get'] = Model.google
+  Model['google-get'] = (req, code, callback) ->
+    debug 'google-get', code
+    clientId = options.credentials.public
+    if options.redirectUri
+      redirectUri = options.redirectUri
+    else
+      redirectUri = "#{req.protocol}://#{req.get('host')}#{req.baseUrl}#{options.uri}"
+    Model.google req, code, clientId, redirectUri, callback
 
   Model.remoteMethod 'google-get',
     accepts: [
@@ -108,18 +115,6 @@ module.exports = (server, options) ->
       }
       {
         arg: 'code'
-        type: 'string'
-        http:
-          source: 'query'
-      }
-      {
-        arg: 'clientId'
-        type: 'string'
-        http:
-          source: 'query'
-      }
-      {
-        arg: 'redirectUri'
         type: 'string'
         http:
           source: 'query'

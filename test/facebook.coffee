@@ -99,8 +99,6 @@ describe 'Facebook module', ->
         agent.get '/api/accounts/facebook'
         .query
           code: 'this_is_a_code'
-          clientId: 'this_is_a_client_id'
-          redirectUri: 'this_is_the_uri'
         .end (err, res) ->
           answer =
             err: err

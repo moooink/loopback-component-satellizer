@@ -12,6 +12,7 @@
       "version": "v2.3",
       "fields": ["email"],
       "uri": "/facebook",
+      "redirectUri": "this_is_the_uri",
       "mapping": {
         "id": "facebook",
         "email": "email",
@@ -27,6 +28,7 @@
         "private": "this_is_a_private_key"
       },
       "uri": "/google",
+      "redirectUri": "this_is_the_uri",
       "mapping": {
         "sub": "google",
         "email": "email",

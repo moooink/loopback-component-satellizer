@@ -112,7 +112,14 @@ module.exports = (server, options) ->
         Common.authenticate account, done
     ], callback
 
-  Model['facebook-get'] = Model.facebook
+  Model['facebook-get'] = (req, code, callback) ->
+    debug 'facebook-get', code
+    clientId = options.credentials.public
+    if options.redirectUri
+      redirectUri = options.redirectUri
+    else
+      redirectUri = "#{req.protocol}://#{req.get('host')}#{req.baseUrl}#{options.uri}"
+    Model.facebook req, code, clientId, redirectUri, callback
 
   Model.remoteMethod 'facebook-get',
     accepts: [
@@ -124,18 +131,6 @@ module.exports = (server, options) ->
       }
       {
         arg: 'code'
-        type: 'string'
-        http:
-          source: 'query'
-      }
-      {
-        arg: 'clientId'
-        type: 'string'
-        http:
-          source: 'query'
-      }
-      {
-        arg: 'redirectUri'
         type: 'string'
         http:
           source: 'query'
