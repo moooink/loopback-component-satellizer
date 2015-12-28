@@ -28,6 +28,9 @@ module.exports = (server, options) ->
         debug JSON.stringify err
         return callback err
       if res.statusCode isnt 200
+        if accessToken && accessToken instanceof Object && accessToken.error
+          accessToken.error.status = 500
+          return callback accessToken.error  
         err = new Error accessToken
         err.status = 500
         debug JSON.stringify err
@@ -47,6 +50,9 @@ module.exports = (server, options) ->
         debug JSON.stringify err
         return callback err
       if res.statusCode isnt 200
+        if profile && profile instanceof Object && profile.error
+          profile.error.status = 500
+          return callback profile.error  
         err = new Error profile
         err.status = 500
         debug JSON.stringify err
