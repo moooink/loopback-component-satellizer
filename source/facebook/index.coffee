@@ -31,7 +31,7 @@ module.exports = (server, options) ->
         if accessToken && accessToken instanceof Object && accessToken.error
           accessToken.error.status = 500
           return callback accessToken.error  
-        err = new Error accessToken
+        err = new Error JSON.stringify accessToken
         err.status = 500
         debug JSON.stringify err
         return callback err
@@ -53,7 +53,7 @@ module.exports = (server, options) ->
         if profile && profile instanceof Object && profile.error
           profile.error.status = 500
           return callback profile.error  
-        err = new Error profile
+        err = new Error JSON.stringify profile
         err.status = 500
         debug JSON.stringify err
         return callback err
