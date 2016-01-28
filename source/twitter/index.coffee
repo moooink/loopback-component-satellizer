@@ -33,7 +33,14 @@ module.exports = (server, options) ->
         token: oauthToken
         verifier: oauthVerifier
     , (err, res, accessToken) ->
-      return callback err if err
+      if err
+        debug JSON.stringify err
+        return callback err
+      if res.statusCode isnt 200
+        err = new Error accessToken
+        err.status = 500
+        debug JSON.stringify err
+        return callback err
       callback null, qs.parse accessToken
 
   fetchProfile = (accessToken, callback) ->
@@ -46,7 +53,14 @@ module.exports = (server, options) ->
         oauth_token: accessToken.oauth_token
       json: true
     , (err, res, profile) ->
-      return callback err if err
+      if err
+        debug JSON.stringify err
+        return callback err
+      if res.statusCode isnt 200
+        err = new Error JSON.stringify profile
+        err.status = 500
+        debug JSON.stringify err
+        return callback err
       callback null, profile
 
   link = (req, profile, callback) ->

@@ -22,9 +22,19 @@ module.exports = (server, options) ->
         redirect_uri: redirectUri
         grant_type: 'authorization_code'
       json: true
-    , (err, res, token) ->
-      return callback err if err
-      callback null, token.access_token
+    , (err, res, accessToken) ->
+      if err
+        debug JSON.stringify err
+        return callback err
+      if res.statusCode isnt 200
+        if accessToken and accessToken instanceof Object and accessToken.error
+          accessToken.error.status = 500
+          return callback accessToken.error  
+        err = new Error JSON.stringify accessToken
+        err.status = 500
+        debug JSON.stringify err
+        return callback err
+      callback null, accessToken.access_token
 
   fetchProfile = (accessToken, callback) ->
     debug 'fetchProfile'
@@ -34,7 +44,17 @@ module.exports = (server, options) ->
         Authorization: "Bearer #{accessToken}"
       json: true
     , (err, res, profile) ->
-      return callback err if err
+      if err
+        debug JSON.stringify err
+        return callback err
+      if res.statusCode isnt 200
+        if profile and profile instanceof Object and profile.error
+          profile.error.status = 500
+          return callback profile.error  
+        err = new Error JSON.stringify profile
+        err.status = 500
+        debug JSON.stringify err
+        return callback err
       callback null, profile
 
   link = (req, profile, callback) ->

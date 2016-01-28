@@ -18,7 +18,6 @@ module.exports = (server, options) ->
     AccessToken = Model.app.models.AccessToken
     AccessToken.findForRequest req, (err, accessToken) ->
       if err
-        Account.app.logger.error err
         return callback err
       return callback null, false if not accessToken
       Model.findById accessToken.userId, callback
