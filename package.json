@@ -40,7 +40,7 @@
     "coffee-script": "^1.9.3",
     "debug": "^2.2.0",
     "loopback-component-explorer": "^2.1.1",
-    "qs": "^5.2.0",
+    "qs": "^6.0.2",
     "querystring": "^0.2.0",
     "randomstring": "^1.0.6",
     "request": "^2.57.0"
@@ -57,7 +57,7 @@
     "loopback-boot": "^2.8.0",
     "loopback-datasource-juggler": "^2.29.2",
     "mocha": "^2.2.5",
-    "nock": "^2.3.0",
+    "nock": "^7.0.2",
     "serve-favicon": "^2.0.1",
     "strong-express-metrics": "^2.0.1",
     "supertest": "^1.0.1"
