@@ -8,9 +8,8 @@ module.exports = (server, options) ->
     ttl = account.constructor.settings.maxTTL
     account.createAccessToken ttl, (err, token) ->
       return callback err if err
-      Model.app.models.AccessToken.find {}, (err, list) ->
-        token.token = token.id
-        callback null, token
+      token.token = token.id
+      callback null, token
 
   current = (req, callback) ->
     debug 'current'
